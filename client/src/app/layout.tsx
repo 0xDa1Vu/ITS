@@ -1,5 +1,13 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
+import { Header, Footer } from '@/components/layout';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Vehicle Rental',
@@ -12,12 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi" className={inter.variable}>
       <body>
-        <header style={{ padding: '1rem 2rem', borderBottom: '1px solid #eee' }}>
-          <h1 style={{ margin: 0 }}>Vehicle Rental</h1>
-        </header>
-        <main style={{ padding: '2rem' }}>{children}</main>
+        <Header />
+        <main style={{ minHeight: '60vh' }}>{children}</main>
+        <Footer />
       </body>
     </html>
   );

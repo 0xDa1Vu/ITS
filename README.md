@@ -1,58 +1,87 @@
-# Vehicle Rental (Cho thuê phương tiện)
+# Vehicle Rental — Cho thuê phương tiện
 
-Web application for renting vehicles. **Next.js** frontend and **Python Flask** backend with SQLite database (structure similar to the reference: Account, Vehicle, Order, Guest, RefreshToken).
+A full-stack web application for vehicle rental. Customers can browse vehicles and place bookings; the system manages accounts, orders, and guests with a SQLite database.
 
-## Structure
-
-```
-project_ITS/
-├── client/          # Frontend (Next.js 15 + TypeScript)
-├── server/          # Backend (Python Flask + SQLAlchemy + SQLite)
-│   ├── app.py
-│   ├── models/      # Account, Vehicle, VehicleSnapshot, Guest, Order, RefreshToken
-│   ├── routes/
-│   └── requirements.txt
-├── shared/
-└── README.md
-```
+---
 
 ## Tech stack
 
-- **Frontend**: Next.js 15, React 18, TypeScript
-- **Backend**: Python 3, Flask, Flask-SQLAlchemy, Flask-CORS, bcrypt
-- **Database**: SQLite (`dev.db`), schema like reference (Account, Dish→Vehicle, Order, Guest, RefreshToken)
+| Layer    | Stack |
+|----------|--------|
+| Frontend | Next.js 15 (App Router), React 18, TypeScript |
+| Backend  | Python 3.10+, Flask, Flask-SQLAlchemy, Flask-CORS, bcrypt |
+| Database | SQLite (`dev.db`) |
 
-## Database tables (like reference image)
+---
 
-| Table            | Description                    |
-|------------------|--------------------------------|
-| Account          | id, name, email, password (bcrypt) |
-| Vehicle          | Like Dish — vehicles to rent  |
-| VehicleSnapshot  | Like DishSnapshot             |
-| Guest            | Customers                     |
-| Order            | Rental orders/bookings        |
-| RefreshToken     | Auth sessions                 |
+## Project structure
+
+```
+project_ITS/
+├── client/                 # Next.js frontend
+│   ├── src/
+│   │   └── app/            # App Router: layout, page, globals
+│   ├── next.config.ts
+│   ├── package.json
+│   └── .env.example
+├── server/                 # Flask backend
+│   ├── app.py              # App factory, DB init, blueprint registration
+│   ├── models/             # SQLAlchemy models
+│   │   ├── account.py
+│   │   ├── vehicle.py
+│   │   ├── guest.py
+│   │   ├── order.py
+│   │   └── refresh_token.py
+│   ├── routes/             # API blueprints
+│   ├── prisma/             # schema.prisma (reference only, DB is SQLAlchemy)
+│   ├── requirements.txt
+│   └── .env.example
+├── shared/
+├── package.json            # Root scripts (client only)
+└── README.md
+```
+
+---
+
+## Database schema
+
+SQLite with tables aligned to a reference design (Account, Vehicle, Order, Guest, RefreshToken).
+
+| Table            | Purpose |
+|------------------|--------|
+| **Account**      | Users: `id`, `name`, `email`, `password` (bcrypt) |
+| **Vehicle**     | Rentable vehicles: `name`, `description`, `price_per_day`, `available` |
+| **VehicleSnapshot** | Snapshot of vehicle data at booking time |
+| **Guest**       | Customers: `name`, `email`, `phone` |
+| **Order**       | Rentals: `guest_id`, `vehicle_id`, `start_date`, `end_date`, `total_price`, `status` |
+| **RefreshToken** | Auth: `account_id`, `token`, `expires_at` |
+
+The real schema is defined in `server/models/`. `server/prisma/schema.prisma` is a Prisma-style reference only.
+
+---
 
 ## Getting started
 
 ### Prerequisites
 
-- Node.js 18+
-- Python 3.10+
+- **Node.js** 18+
+- **Python** 3.10+
+- **npm** (or pnpm/yarn)
 
-### Backend (Python)
+### 1. Backend (Flask)
 
 ```bash
 cd server
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
 
-API runs at `http://localhost:5000`. Database file: `server/dev.db` (created on first run).
+- API: **http://localhost:5000**
+- DB file: `server/dev.db` (created on first run)
 
-### Frontend (Next.js)
+### 2. Frontend (Next.js)
 
 ```bash
 cd client
@@ -60,12 +89,38 @@ npm install
 npm run dev
 ```
 
-App runs at `http://localhost:3000`. API proxy: `/api/*` → `http://localhost:5000/api/*`.
+- App: **http://localhost:3000**
+- Requests to `/api/*` are proxied to `http://localhost:5000/api/*` (see `next.config.ts`).
 
-### Environment
+### 3. Environment (optional)
 
-- **Server**: Copy `server/.env.example` to `server/.env` (optional; defaults work for dev).
-- **Client**: Copy `client/.env.example` to `client/.env.local` for `NEXT_PUBLIC_API_URL` if needed.
+- **Server:** copy `server/.env.example` → `server/.env` and set `SECRET_KEY`, `DATABASE_URL` if needed.
+- **Client:** copy `client/.env.example` → `client/.env.local` for `NEXT_PUBLIC_API_URL` (e.g. for direct API calls from the browser).
+
+---
+
+## API (current)
+
+| Method | Endpoint           | Description |
+|--------|--------------------|-------------|
+| GET    | `/api/health`      | Health check |
+| GET    | `/api/accounts`    | List accounts (no password) |
+| POST   | `/api/accounts`    | Create account (body: `name`, `email`, `password`) |
+
+---
+
+## Root scripts
+
+From project root:
+
+```bash
+npm run install:all    # Install root + client deps
+npm run dev:client     # Start Next.js dev server
+```
+
+Backend has no npm scripts; run `python app.py` from `server/` as above.
+
+---
 
 ## License
 
