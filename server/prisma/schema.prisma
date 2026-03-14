@@ -1,0 +1,65 @@
+// Reference schema (same structure as DB) — DB is SQLite + SQLAlchemy, this file is for documentation only.
+// Tables: Account, Vehicle, VehicleSnapshot, Guest, Order, RefreshToken
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../dev.db"
+}
+
+model Account {
+  id        Int    @id @default(autoincrement())
+  name      String
+  email     String @unique
+  password  String
+  RefreshToken RefreshToken[]
+}
+
+model Vehicle {
+  id            Int    @id @default(autoincrement())
+  name          String
+  description   String?
+  price_per_day Float
+  available     Boolean @default(true)
+  VehicleSnapshot VehicleSnapshot[]
+  Order         Order[]
+}
+
+model VehicleSnapshot {
+  id            Int     @id @default(autoincrement())
+  vehicle_id    Int
+  vehicle       Vehicle @relation(fields: [vehicle_id], references: [id])
+  name          String
+  price_per_day Float
+}
+
+model Guest {
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String?
+  phone String?
+  Order Order[]
+}
+
+model Order {
+  id         Int     @id @default(autoincrement())
+  guest_id   Int?
+  guest      Guest?  @relation(fields: [guest_id], references: [id])
+  vehicle_id Int
+  vehicle    Vehicle @relation(fields: [vehicle_id], references: [id])
+  start_date DateTime @db.Date
+  end_date   DateTime @db.Date
+  total_price Float
+  status     String  @default("pending")
+}
+
+model RefreshToken {
+  id         Int      @id @default(autoincrement())
+  account_id Int
+  account    Account  @relation(fields: [account_id], references: [id])
+  token      String   @unique
+  expires_at DateTime
+}

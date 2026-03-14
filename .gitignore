@@ -31,6 +31,16 @@ Thumbs.db
 coverage/
 .nyc_output/
 
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.so
+server/dev.db
+instance/
+
 # Misc
 *.tsbuildinfo
 .cache/
