@@ -1,0 +1,16 @@
+{
+  "name": "project-its-vehicle-rental",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Vehicle rental web application",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "install:all": "npm install && npm install --prefix client && npm install --prefix server"
+  },
+  "keywords": ["vehicle", "rental", "web"],
+  "author": "",
+  "license": "UNLICENSED"
+}
