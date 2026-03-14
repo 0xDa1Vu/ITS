@@ -22,16 +22,7 @@ project_ITS/
 - **Backend**: Python 3, Flask, Flask-SQLAlchemy, Flask-CORS, bcrypt
 - **Database**: SQLite (`dev.db`), schema like reference (Account, Dish→Vehicle, Order, Guest, RefreshToken)
 
-## Database tables (like reference image)
 
-| Table            | Description                    |
-|------------------|--------------------------------|
-| Account          | id, name, email, password (bcrypt) |
-| Vehicle          | Like Dish — vehicles to rent  |
-| VehicleSnapshot  | Like DishSnapshot             |
-| Guest            | Customers                     |
-| Order            | Rental orders/bookings        |
-| RefreshToken     | Auth sessions                 |
 
 ## Getting started
 
