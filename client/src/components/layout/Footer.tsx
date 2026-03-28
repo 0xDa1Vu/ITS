@@ -1,85 +1,73 @@
-import Link from 'next/link';
-import { Phone, Mail, Facebook, Youtube } from 'lucide-react';
+import Link from "next/link";
+import { Phone, Mail, MapPin, Facebook, Youtube } from "lucide-react";
 
 const FOOTER_LINKS = {
   booking: [
-    { label: 'Ngắn hạn', href: '#' },
-    { label: 'Dài hạn', href: '#' },
-    { label: 'Doanh nghiệp', href: '#' },
+    { label: "Thuê xe ngắn hạn", href: "#" },
+    { label: "Thuê xe dài hạn", href: "#" },
+    { label: "Thuê xe doanh nghiệp", href: "#" },
+    { label: "Thuê xe có tài xế", href: "#" },
   ],
   about: [
-    { label: 'Về chúng tôi', href: '#' },
-    { label: 'Dịch vụ', href: '#' },
-    { label: 'Tin tức', href: '#' },
+    { label: "Về chúng tôi", href: "#" },
+    { label: "Dịch vụ", href: "#" },
+    { label: "Tin tức", href: "#" },
+    { label: "Tuyển dụng", href: "#" },
+  ],
+  support: [
+    { label: "Hướng dẫn thuê xe", href: "#" },
+    { label: "Chính sách bảo hiểm", href: "#" },
+    { label: "Điều khoản sử dụng", href: "#" },
+    { label: "Chính sách bảo mật", href: "#" },
   ],
 };
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        background: 'var(--color-bg-subtle)',
-        borderTop: '1px solid var(--color-border)',
-        padding: '2.5rem 0 1.5rem',
-        marginTop: '3rem',
-      }}
-    >
-      <div className="container">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '2rem',
-            marginBottom: '2rem',
-          }}
-        >
+    <footer id="contact" className="bg-secondary text-white">
+      {/* Main footer */}
+      <div className="container py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
-          <div>
+          <div className="lg:col-span-2">
             <Link
               href="/"
-              style={{
-                fontSize: '1.125rem',
-                fontWeight: 700,
-                color: 'var(--color-text)',
-                textDecoration: 'none',
-              }}
+              className="flex items-center gap-2 text-xl font-bold no-underline text-white mb-4"
             >
-              Vehicle Rental
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-secondary font-black text-sm">
+                GF
+              </span>
+              Green Future
             </Link>
-            <p
-              style={{
-                marginTop: '0.5rem',
-                fontSize: 13,
-                color: 'var(--color-text-muted)',
-                lineHeight: 1.5,
-              }}
-            >
-              Cho thuê xe tự lái — uy tín, chuyên nghiệp.
+            <p className="text-gray-400 text-sm leading-relaxed mb-4 max-w-sm">
+              Tiên phong trong lĩnh vực cung cấp dịch vụ trải nghiệm xe điện cao
+              cấp. Đa dạng gói thuê linh hoạt theo ngày, tháng, năm.
             </p>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="flex items-center gap-2">
+                <Phone size={14} className="text-primary shrink-0" />
+                1900 1877
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail size={14} className="text-primary shrink-0" />
+                da1vu912.dev@gmail.com
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin size={14} className="text-primary shrink-0 mt-0.5" />
+                02 Võ Oanh, Quận Bình Thạnh, TP. Hồ Chí Minh
+              </li>
+            </ul>
           </div>
 
           {/* Đặt xe */}
           <div>
-            <h4
-              style={{
-                margin: '0 0 0.75rem',
-                fontSize: 14,
-                fontWeight: 600,
-                color: 'var(--color-text)',
-              }}
-            >
-              Đặt xe
-            </h4>
-            <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            <h4 className="text-sm font-semibold mb-4 text-white">Đặt xe</h4>
+            <ul className="space-y-2">
               {FOOTER_LINKS.booking.map((link) => (
-                <li key={link.label} style={{ marginBottom: '0.5rem' }}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
-                    style={{
-                      fontSize: 13,
-                      color: 'var(--color-text-muted)',
-                      textDecoration: 'none',
-                    }}
+                    className="text-sm text-gray-400 hover:text-primary transition-colors no-underline"
                   >
                     {link.label}
                   </Link>
@@ -90,26 +78,15 @@ export default function Footer() {
 
           {/* Giới thiệu */}
           <div>
-            <h4
-              style={{
-                margin: '0 0 0.75rem',
-                fontSize: 14,
-                fontWeight: 600,
-                color: 'var(--color-text)',
-              }}
-            >
+            <h4 className="text-sm font-semibold mb-4 text-white">
               Giới thiệu
             </h4>
-            <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            <ul className="space-y-2">
               {FOOTER_LINKS.about.map((link) => (
-                <li key={link.label} style={{ marginBottom: '0.5rem' }}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
-                    style={{
-                      fontSize: 13,
-                      color: 'var(--color-text-muted)',
-                      textDecoration: 'none',
-                    }}
+                    className="text-sm text-gray-400 hover:text-primary transition-colors no-underline"
                   >
                     {link.label}
                   </Link>
@@ -118,56 +95,47 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Liên hệ */}
+          {/* Hỗ trợ */}
           <div>
-            <h4
-              style={{
-                margin: '0 0 0.75rem',
-                fontSize: 14,
-                fontWeight: 600,
-                color: 'var(--color-text)',
-              }}
-            >
-              Liên hệ
-            </h4>
-            <ul style={{ margin: 0, padding: 0, listStyle: 'none', fontSize: 13, color: 'var(--color-text-muted)' }}>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <Phone size={14} strokeWidth={2} aria-hidden />
-                1900 1877
-              </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <Mail size={14} strokeWidth={2} aria-hidden />
-                support@example.com
-              </li>
+            <h4 className="text-sm font-semibold mb-4 text-white">Hỗ trợ</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.support.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-primary transition-colors no-underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            <p style={{ margin: '0.75rem 0 0', fontSize: 12, color: 'var(--color-text-muted)' }}>
-              Theo dõi chúng tôi
-            </p>
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-              <a href="#" aria-label="Facebook" style={{ color: 'var(--color-text-muted)' }}>
-                <Facebook size={18} strokeWidth={2} />
-              </a>
-              <a href="#" aria-label="YouTube" style={{ color: 'var(--color-text-muted)' }}>
-                <Youtube size={18} strokeWidth={2} />
-              </a>
-            </div>
           </div>
         </div>
+      </div>
 
-        <div
-          style={{
-            paddingTop: '1.5rem',
-            borderTop: '1px solid var(--color-border)',
-            fontSize: 12,
-            color: 'var(--color-text-muted)',
-            textAlign: 'center',
-          }}
-        >
-          © {new Date().getFullYear()} Vehicle Rental. All rights reserved.
-          {' · '}
-          <Link href="#" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }}>
-            Điều khoản sử dụng
-          </Link>
+      {/* Bottom bar */}
+      <div className="border-t border-white/10">
+        <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-gray-500">
+            © {new Date().getFullYear()} Green Future. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="#"
+              aria-label="Facebook"
+              className="text-gray-500 hover:text-primary transition-colors"
+            >
+              <Facebook size={18} />
+            </a>
+            <a
+              href="#"
+              aria-label="YouTube"
+              className="text-gray-500 hover:text-primary transition-colors"
+            >
+              <Youtube size={18} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
